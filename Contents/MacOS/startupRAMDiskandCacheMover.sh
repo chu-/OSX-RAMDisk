@@ -48,6 +48,7 @@ user_response()
             user_response $@
             ;;
     esac
+true
 }
 
 #
@@ -182,11 +183,13 @@ move_chrome_chanary_cache()
 #
 move_safari_cache()
 {
-    if [ -d "/Users/${USER}/Library/Caches/com.apple.Safari" ]; then
+    if [ -d "/Applications/Safari.app/" ]; then
         if user_response ${MSG_PROMPT_FOUND} 'Safari'${MSG_MOVE_CACHE}; then
             close_app "Safari"
-            /bin/rm -rf ~/Library/Caches/com.apple.Safari
             /bin/mkdir -p ${USERRAMDISK}/Apple/Safari
+            if [ -d "/Users/${USER}/Library/Caches/com.apple.Safari" ]; then
+                    /bin/rm -rf ~/Library/Caches/com.apple.Safari
+            fi
             /bin/ln -s ${USERRAMDISK}/Apple/Safari ~/Library/Caches/com.apple.Safari
             echo "Moved Safari cache."
         fi
@@ -198,11 +201,13 @@ move_safari_cache()
 #
 move_firefox_cache()
 {
-    if [ -d "/Users/${USER}/Library/Caches/Firefox" ]; then
+    if [ -d "/Applications/Firefox.app/" ]; then
         if user_response ${MSG_PROMPT_FOUND} 'Firefox'${MSG_MOVE_CACHE}; then
             close_app "Firefox"
-            /bin/rm -rf ~/Library/Caches/Firefox
             /bin/mkdir -p ${USERRAMDISK}/Firefox
+            if [ -d  "/Users/${USER}/Library/Caches/Firefox" ]; then
+                    /bin/rm -rf ~/Library/Caches/Firefox
+            fi
             /bin/ln -s ${USERRAMDISK}/Firefox ~/Library/Caches/Firefox
             echo "Moved Firefox cache."
         fi

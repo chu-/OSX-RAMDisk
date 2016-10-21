@@ -194,6 +194,22 @@ move_safari_cache()
 }
 
 #
+# Firefox Cache
+#
+move_firefox_cache()
+{
+    if [ -d "/Users/${USER}/Library/Caches/Firefox" ]; then
+        if user_response ${MSG_PROMPT_FOUND} 'Firefox'${MSG_MOVE_CACHE}; then
+            close_app "Firefox"
+            /bin/rm -rf ~/Library/Caches/Firefox
+            /bin/mkdir -p ${USERRAMDISK}/Firefox
+            /bin/ln -s ${USERRAMDISK}/Firefox ~/Library/Caches/Firefox
+            echo "Moved Firefox cache."
+        fi
+    fi
+}
+
+#
 # iTunes Cache
 #
 move_itunes_cache()
@@ -368,6 +384,7 @@ main() {
     # move the caches
     move_chrome_cache
     move_safari_cache
+    move_firefox_cache
     move_idea_cache
     move_ideace_cache
     # create intermediate folder for intellij projects output
